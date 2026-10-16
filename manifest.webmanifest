@@ -1,0 +1,19 @@
+{
+  "name": "Wiegemoment – dein Gewichtstagebuch",
+  "short_name": "Wiegemoment",
+  "description": "Dein privates Gewichtstagebuch mit Verlauf und 7-Tage-Prognose.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f6f0",
+  "theme_color": "#f5f6f0",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

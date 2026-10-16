@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f5f6f0">
+    <meta name="description" content="Dein privates Gewichtstagebuch mit Verlauf und 7-Tage-Prognose.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Wiegemoment">
+    <link rel="icon" href="./icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./icon.svg">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Wiegemoment – dein Gewichtstagebuch</title>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Wiegemoment Startseite">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M8 12.5h16l2 14H6l2-14Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M11 12.5a5 5 0 0 1 10 0M16 17l3-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="16" cy="17" r="1" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Wiegemoment</span>
+        </a>
+        <span class="privacy-note"><span aria-hidden="true"></span> Nur auf diesem Gerät</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">DEIN PERSÖNLICHES TAGEBUCH</p>
+        <h1 id="page-title">In deinem Tempo.</h1>
+        <p class="intro-copy">Ein kleiner Eintrag am Tag. Ein klarer Blick auf deinen Weg.</p>
+      </section>
+
+      <div id="storage-error" class="notice notice-error" role="alert" hidden></div>
+
+      <section class="entry-card card" aria-labelledby="entry-title">
+        <div class="card-heading">
+          <div>
+            <p class="eyebrow">TÄGLICHER EINTRAG</p>
+            <h2 id="entry-title">Wie viel wiegst du heute?</h2>
+          </div>
+          <span class="today-badge" id="today-label"></span>
+        </div>
+        <form id="entry-form" class="entry-form">
+          <label class="field">
+            <span>Datum</span>
+            <input id="entry-date" name="date" type="date" required>
+          </label>
+          <label class="field weight-field">
+            <span>Gewicht</span>
+            <span class="weight-input-wrap">
+              <input id="entry-weight" name="weight" type="number" inputmode="decimal" min="20" max="500" step="0.1" placeholder="z. B. 72,4" required>
+              <span aria-hidden="true">kg</span>
+            </span>
+          </label>
+          <button class="button button-primary" type="submit">
+            <span id="save-button-label">Eintrag speichern</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <p id="form-message" class="form-message" aria-live="polite"></p>
+      </section>
+
+      <section class="forecast-card card" aria-labelledby="forecast-title">
+        <div class="forecast-heading">
+          <div>
+            <p class="eyebrow">BLICK NACH VORN</p>
+            <h2 id="forecast-title">Deine nächste Woche</h2>
+          </div>
+          <span class="forecast-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="m4 16 5-5 4 3 7-8M15 6h5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <div class="forecast-content">
+          <div class="forecast-number-block">
+            <p id="forecast-direction" class="forecast-direction">Noch kein Trend</p>
+            <p class="forecast-number" id="forecast-change">–<span> kg</span></p>
+            <p id="forecast-caption" class="forecast-caption">Trage mindestens zwei Gewichte ein, um deinen Trend zu sehen.</p>
+          </div>
+          <div class="forecast-visual" aria-hidden="true">
+            <div class="forecast-visual-line"></div>
+            <span class="forecast-dot"></span>
+            <span class="forecast-visual-label">7 TAGE</span>
+          </div>
+        </div>
+        <p class="forecast-footnote">Eine Orientierung aus deinem bisherigen Verlauf – keine medizinische Vorhersage.</p>
+      </section>
+
+      <section class="chart-card card" aria-labelledby="chart-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">DEIN VERLAUF</p>
+            <h2 id="chart-title">Gewicht im Überblick</h2>
+          </div>
+          <span class="chart-unit">Kilogramm</span>
+        </div>
+        <div id="chart-container" class="chart-container">
+          <div class="empty-chart">
+            <span class="empty-chart-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none"><path d="M7 31V9m0 22h27M12 25l7-8 6 4 9-11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <p>Deine ersten Einträge erscheinen hier.</p>
+          </div>
+        </div>
+        <div id="chart-legend" class="chart-legend" hidden>
+          <span><i class="legend-dot legend-actual"></i>Dein Gewicht</span>
+          <span><i class="legend-dot legend-forecast"></i>Prognose</span>
+        </div>
+      </section>
+
+      <section class="history-section" aria-labelledby="history-title">
+        <div class="section-heading history-heading">
+          <div>
+            <p class="eyebrow">DRANBLEIBEN, GANZ OHNE DRUCK</p>
+            <h2 id="history-title">Letzte Einträge</h2>
+          </div>
+          <button id="export-button" class="button button-secondary" type="button" disabled>CSV exportieren</button>
+        </div>
+        <div id="history-list" class="history-list">
+          <p class="empty-history">Noch keine Einträge. Dein erster Schritt muss nicht groß sein.</p>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        <p>Deine Daten bleiben in diesem Browser auf diesem Gerät.</p>
+        <p class="ios-hint">Auf dem iPhone: <strong>Teilen</strong> antippen und <strong>Zum Home-Bildschirm</strong> wählen.</p>
+      </footer>
+    </main>
+  </body>
+</html>
